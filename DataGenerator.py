@@ -1,3 +1,5 @@
+from faker import Faker
+fake = Faker()
 import random
 import string
 
@@ -124,22 +126,42 @@ def generate_multiple(count=10, style='random'):
     return [generate_username(style) for _ in range(count)]
 
 
-# Example usage
-if __name__ == "__main__":
-    print("=== Random Username Generator ===\n")
+# # Example usage
+# if __name__ == "__main__":
+#     print("=== Random Username Generator ===\n")
+#
+#     print("10 Random Style Usernames:")
+#     for username in generate_multiple(10, 'random'):
+#         print(f"  {username}")
+#
+#     print("\n5 Adjective + Noun Usernames:")
+#     for username in generate_multiple(5, 'adjective_noun'):
+#         print(f"  {username}")
+#
+#     print("\n5 Underscore Style Usernames:")
+#     for username in generate_multiple(5, 'underscore'):
+#         print(f"  {username}")
+#
+#     print("\n5 Leet Speak Usernames:")
+#     for username in generate_multiple(5, 'leet'):
+#         print(f"  {username}")
 
-    print("10 Random Style Usernames:")
-    for username in generate_multiple(10, 'random'):
-        print(f"  {username}")
+def generate_password(min_length=8, max_length=12):
+    length = random.randint(min_length, max_length)
+    alphabet = string.ascii_letters + string.digits + "!@#$%^&*()<>"
+    pw = "".join(random.sample(alphabet, length))
+    return pw
 
-    print("\n5 Adjective + Noun Usernames:")
-    for username in generate_multiple(5, 'adjective_noun'):
-        print(f"  {username}")
+authentication = {}
 
-    print("\n5 Underscore Style Usernames:")
-    for username in generate_multiple(5, 'underscore'):
-        print(f"  {username}")
+for i in range(1000):
+    username = generate_username()
+    authentication[username] = generate_password()
 
-    print("\n5 Leet Speak Usernames:")
-    for username in generate_multiple(5, 'leet'):
-        print(f"  {username}")
+with open("passwords.txt", "w") as file:
+    for username, password in authentication.items():
+        file.write(f"{username}:{password}\n")
+
+with open("userdata.txt", "w") as file:
+    for username in authentication.keys():
+        file.write(f"{username},{fake.first_name()},{fake.last_name()},{fake.email()}\n")
