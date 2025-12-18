@@ -22,3 +22,8 @@ with open("userdata.txt","r") as file:
 un = input("enter username: ")
 print(passwords[un])
 print(userdata[un])
+
+# TODO: create menu
+# TODO: login function
+# TODO: change password function
+# TODO: create account function
